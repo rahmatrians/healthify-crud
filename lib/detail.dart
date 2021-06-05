@@ -31,12 +31,10 @@ class _DetailState extends State<Detail> {
                     children: [
                       new RaisedButton(
                         child: new Text("EDIT"),
-                        color: Colors.green,
                         onPressed: () {},
                       ),
                       new RaisedButton(
                         child: new Text("EDIT"),
-                        color: Colors.red,
                         onPressed: () {},
                       )
                     ],
