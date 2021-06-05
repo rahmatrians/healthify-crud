@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './editdata.dart';
 
 class Detail extends StatefulWidget {
   List list;
@@ -31,7 +32,10 @@ class _DetailState extends State<Detail> {
                     children: [
                       new RaisedButton(
                         child: new Text("EDIT"),
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) => new EditData(
+                                    list: widget.list, index: widget.index))),
                       ),
                       new RaisedButton(
                         child: new Text("EDIT"),

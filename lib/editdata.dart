@@ -1,31 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import './main.dart';
 
-class AddData extends StatefulWidget {
+class EditData extends StatefulWidget {
+  final List list;
+  final int index;
+
+  EditData({this.list, this.index});
+
   @override
-  _AddDataState createState() => _AddDataState();
+  _EditDataState createState() => _EditDataState();
 }
 
-class _AddDataState extends State<AddData> {
-  TextEditingController controllerCode = new TextEditingController();
-  TextEditingController controllerName = new TextEditingController();
-  TextEditingController controllerPrice = new TextEditingController();
-  TextEditingController controllerStock = new TextEditingController();
+class _EditDataState extends State<EditData> {
+  TextEditingController controllerCode;
+  TextEditingController controllerName;
+  TextEditingController controllerPrice;
+  TextEditingController controllerStock;
 
-  void AddingData() {
-    http.post(Uri.parse("http://10.0.2.2/healthify/adddata.php"), body: {
-      'itemcode': controllerCode.text,
-      'itemname': controllerName.text,
-      'price': controllerPrice.text,
-      'stock': controllerStock.text
+  void editData() {
+    http.post(Uri.parse("http://10.0.2.2/healthify/editdata.php"), body: {
+      "id": widget.list[widget.index]['id'],
+      "item_code": controllerCode.text,
+      "item_name": controllerName.text,
+      "price": controllerPrice.text,
+      "stock": controllerStock.text
     });
+  }
+
+  @override
+  void initState() {
+    controllerCode = controllerCode =
+        new TextEditingController(text: widget.list[widget.index]['item_code']);
+    controllerName =
+        new TextEditingController(text: widget.list[widget.index]['item_name']);
+    controllerPrice =
+        new TextEditingController(text: widget.list[widget.index]['price']);
+    controllerStock =
+        new TextEditingController(text: widget.list[widget.index]['stock']);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: AppBar(
-          title: new Text("ADD DATA"),
+        appBar: new AppBar(
+          title: new Text("EDIT DATA"),
         ),
         body: Padding(
           padding: EdgeInsets.all(10),
@@ -59,8 +79,11 @@ class _AddDataState extends State<AddData> {
                   new RaisedButton(
                       child: Text("Simpan"),
                       onPressed: () {
-                        AddingData();
-                        Navigator.pop(context);
+                        editData();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                        );
                       })
                 ],
               ),
