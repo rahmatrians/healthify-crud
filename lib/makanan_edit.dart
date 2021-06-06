@@ -2,29 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import './main.dart';
 
-class EditData extends StatefulWidget {
+class MakananEdit extends StatefulWidget {
   final List list;
   final int index;
 
-  EditData({this.list, this.index});
+  MakananEdit({this.list, this.index});
 
   @override
-  _EditDataState createState() => _EditDataState();
+  _MakananEditState createState() => _MakananEditState();
 }
 
-class _EditDataState extends State<EditData> {
-  TextEditingController controllerCode;
+class _MakananEditState extends State<MakananEdit> {
   TextEditingController controllerName;
-  TextEditingController controllerPrice;
-  TextEditingController controllerStock;
+  TextEditingController controllerDesc;
 
   void editData() {
     http.post(Uri.parse("http://10.0.2.2/healthify/editdata.php"), body: {
       "id": widget.list[widget.index]['id'],
-      "item_code": controllerCode.text,
-      "item_name": controllerName.text,
-      "price": controllerPrice.text,
-      "stock": controllerStock.text
+      "item_name": controllerDesc.text,
     });
   }
 
@@ -54,24 +49,14 @@ class _EditDataState extends State<EditData> {
               new Column(
                 children: [
                   new TextField(
-                    controller: controllerCode,
-                    decoration: new InputDecoration(
-                        hintText: "Item Code", labelText: "Item Code"),
-                  ),
-                  new TextField(
                     controller: controllerName,
                     decoration: new InputDecoration(
-                        hintText: "Item Name", labelText: "Item Name"),
+                        hintText: "Nama Makanan", labelText: "Nama Makanan"),
                   ),
                   new TextField(
-                    controller: controllerPrice,
+                    controller: controllerDesc,
                     decoration: new InputDecoration(
-                        hintText: "Price", labelText: "Price"),
-                  ),
-                  new TextField(
-                    controller: controllerStock,
-                    decoration: new InputDecoration(
-                        hintText: "Stock", labelText: "Stock"),
+                        hintText: "Keterangan", labelText: "Keterangan"),
                   ),
                   new Padding(
                     padding: EdgeInsets.all(10),
@@ -79,7 +64,7 @@ class _EditDataState extends State<EditData> {
                   new RaisedButton(
                       child: Text("Simpan"),
                       onPressed: () {
-                        editData();
+                        AddingData();
                         Navigator.pop(context);
                       })
                 ],
